@@ -1,0 +1,24 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        n, m = len(s1), len(s2)
+
+        if m < n: return False
+
+        need = [0] * 26
+
+        for c in s1:
+            need[ord(c) - ord('a')] += 1
+        
+        have = [0] * 26
+        for i in range(n):
+            have[ord(s2[i]) - ord('a')] += 1
+        
+        if need == have: return True
+
+        l = 0
+        for i in range(n, m):
+            have[ord(s2[i]) - ord('a')] += 1
+            have[ord(s2[l]) - ord('a')] -= 1
+            if have == need: return True
+            l += 1
+        return False
